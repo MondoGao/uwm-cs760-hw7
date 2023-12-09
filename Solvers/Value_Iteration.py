@@ -61,17 +61,25 @@ class ValueIteration(AbstractSolver):
                     Ref: Sutton book eq. 4.10.
                 Once those values have been updated, thats it for this function/class
         """
-
-        # you can add variables here if it is helpful
+        # next values
+        V_prime = np.zeros(self.env.nS)
 
         # Update the estimated value of each state
         for each_state in range(self.env.nS):
-            ###################################################
-            #            Compute self.V here                  #
-            # Do a one-step lookahead to find the best action #
-            #           YOUR IMPLEMENTATION HERE              #
-            ###################################################
-            raise NotImplementedError
+            # each_state: state index
+            # find the best action based on the one-step lookahead
+            V_actions = np.zeros(self.env.nA)
+            for a_idx in range(self.env.nA):
+                for prob, next_state, reward, done in self.env.P[each_state][a_idx]:
+                    V_actions[a_idx] += prob * (
+                        reward + self.options.gamma * self.V[next_state]
+                    )
+            a_best = np.argmax(V_actions)
+            v_s = V_actions[a_best]
+            V_prime[each_state] = v_s
+        
+        self.V = V_prime
+
 
         # Dont worry about this part
         self.statistics[Statistics.Rewards.value] = np.sum(self.V)
@@ -102,11 +110,14 @@ class ValueIteration(AbstractSolver):
                 self.env.nA:
                     number of actions in the environment
             """
-
-            ################################
-            #   YOUR IMPLEMENTATION HERE   #
-            ################################
-            raise NotImplementedError
+            V_actions = np.zeros(self.env.nA)
+            for a_idx in range(self.env.nA):
+                for prob, next_state, reward, done in self.env.P[state][a_idx]:
+                    V_actions[a_idx] += prob * (
+                        reward + self.options.gamma * self.V[next_state]
+                    )
+            a_best = np.argmax(V_actions)
+            return a_best
 
         return policy_fn
 
