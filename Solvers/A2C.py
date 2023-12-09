@@ -16,17 +16,16 @@ from lib import plotting
 
 
 class A2C(AbstractSolver):
-
     def __init__(self, env, options):
         super().__init__(env, options)
         self.state_size = self.env.observation_space.shape[0]
         self.action_size = self.env.action_space.n
         self.trajectory = []
-        self.actor_critic = ActorCritic(self.state_size, self.action_size,
-                                        layers=options.layers)
+        self.actor_critic = ActorCritic(
+            self.state_size, self.action_size, layers=options.layers
+        )
         self.policy = self.create_greedy_policy()
-        self.optimizer = optim.SGD(self.actor_critic.parameters(),
-                                   options.alpha)
+        self.optimizer = optim.SGD(self.actor_critic.parameters(), options.alpha)
 
     def create_greedy_policy(self):
         """
@@ -40,9 +39,9 @@ class A2C(AbstractSolver):
 
         def policy_fn(state):
             return np.argmax(
-                self.actor_critic.action_probs(
-                    torch.tensor(state, dtype=torch.float32)
-                ).detach().numpy()
+                self.actor_critic.action_probs(torch.tensor(state, dtype=torch.float32))
+                .detach()
+                .numpy()
             )
 
         return policy_fn
@@ -72,10 +71,11 @@ class A2C(AbstractSolver):
         rewards = []
 
         for t in range(self.options.steps):
-
-            probs = self.actor_critic.action_probs(
-                torch.tensor(state, dtype=torch.float32)
-            ).detach().numpy()
+            probs = (
+                self.actor_critic.action_probs(torch.tensor(state, dtype=torch.float32))
+                .detach()
+                .numpy()
+            )
             action = np.random.choice(len(probs), p=probs)
 
             next_state, reward, done, _ = self.step(action)
@@ -128,8 +128,7 @@ class A2C(AbstractSolver):
         # actions.
 
         log_probs = torch.sum(
-            self.actor_critic.log_probs(states_tensor) * actions_one_hot,
-            axis=-1
+            self.actor_critic.log_probs(states_tensor) * actions_one_hot, axis=-1
         )
 
         # Compute actor and critic losses

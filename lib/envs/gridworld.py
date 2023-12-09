@@ -8,6 +8,7 @@ RIGHT = 1
 DOWN = 2
 LEFT = 3
 
+
 class GridworldEnv(discrete.DiscreteEnv):
     """
     Grid World environment from Sutton's Reinforcement Learning book chapter 4.
@@ -28,12 +29,12 @@ class GridworldEnv(discrete.DiscreteEnv):
     You receive a reward of -1 at each step until you reach a terminal state.
     """
 
-    metadata = {'render.modes': ['human', 'ansi']}
+    metadata = {"render.modes": ["human", "ansi"]}
     name = "Gridworld"
 
-    def __init__(self, shape=[4,4]):
+    def __init__(self, shape=[4, 4]):
         if not isinstance(shape, (list, tuple)) or not len(shape) == 2:
-            raise ValueError('shape argument must be a list/tuple of length 2')
+            raise ValueError("shape argument must be a list/tuple of length 2")
 
         self.shape = shape
 
@@ -45,14 +46,14 @@ class GridworldEnv(discrete.DiscreteEnv):
 
         P = {}
         grid = np.arange(nS).reshape(shape)
-        it = np.nditer(grid, flags=['multi_index'])
+        it = np.nditer(grid, flags=["multi_index"])
 
         while not it.finished:
             s = it.iterindex
             y, x = it.multi_index
 
             # P[s][a] = (prob, next_state, reward, is_done)
-            P[s] = {a : [] for a in range(nA)}
+            P[s] = {a: [] for a in range(nA)}
 
             is_done = lambda s: s == 0 or s == (nS - 1)
             reward = 0.0 if is_done(s) else -1.0
@@ -85,11 +86,11 @@ class GridworldEnv(discrete.DiscreteEnv):
 
         super(GridworldEnv, self).__init__(nS, nA, P, isd)
 
-    def render(self, mode='human', close=False):
+    def render(self, mode="human", close=False):
         self._render(mode, close)
 
-    def _render(self, mode='human', close=False):
-        """ Renders the current gridworld layout
+    def _render(self, mode="human", close=False):
+        """Renders the current gridworld layout
 
          For example, a 4x4 grid with the mode="human" looks like:
             T  o  o  o
@@ -101,10 +102,10 @@ class GridworldEnv(discrete.DiscreteEnv):
         if close:
             return
 
-        outfile = io.StringIO() if mode == 'ansi' else sys.stdout
+        outfile = io.StringIO() if mode == "ansi" else sys.stdout
 
         grid = np.arange(self.nS).reshape(self.shape)
-        it = np.nditer(grid, flags=['multi_index'])
+        it = np.nditer(grid, flags=["multi_index"])
         while not it.finished:
             s = it.iterindex
             y, x = it.multi_index

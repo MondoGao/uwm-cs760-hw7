@@ -11,8 +11,7 @@ from enum import Enum
 
 
 class AbstractSolver(ABC):
-
-    def __init__(self,env,options):
+    def __init__(self, env, options):
         self.statistics = [0] * len(Statistics)
         self.env = env
         self.options = options
@@ -20,9 +19,9 @@ class AbstractSolver(ABC):
         self.render = False
 
     def init_stats(self):
-        self.statistics[1:] = [0] * (len(Statistics)-1)
+        self.statistics[1:] = [0] * (len(Statistics) - 1)
 
-    def step(self,action):
+    def step(self, action):
         """
         Take one step in the environment while keeping track of statistical information
         Param:
@@ -47,16 +46,18 @@ class AbstractSolver(ABC):
                 pass
         return next_state, reward, done, info
 
-    def calc_reward(self,state):
+    def calc_reward(self, state):
         # Create a new reward function for the CartPole domain that takes into account the degree of the pole
         try:
             domain = self.env.unwrapped.spec.id
         except:
             domain = self.env.name
-        if domain == 'CartPole-v1':
+        if domain == "CartPole-v1":
             x, x_dot, theta, theta_dot = state
             r1 = (self.env.x_threshold - abs(x)) / self.env.x_threshold - 0.8
-            r2 = (self.env.theta_threshold_radians - abs(theta)) / self.env.theta_threshold_radians - 0.5
+            r2 = (
+                self.env.theta_threshold_radians - abs(theta)
+            ) / self.env.theta_threshold_radians - 0.5
             return r1 + r2
         return 0
 
@@ -97,10 +98,10 @@ class AbstractSolver(ABC):
     def get_out_header():
         ans = "Domain,Solver"
         for s in Statistics:
-            ans += ","+s.name
+            ans += "," + s.name
         return ans
 
-    def plot(self,stats):
+    def plot(self, stats):
         pass
 
     def get_stat(self):
@@ -108,9 +109,9 @@ class AbstractSolver(ABC):
             domain = self.env.unwrapped.spec.id
         except:
             domain = self.env.name
-        ans = '{},{}'.format(domain, str(self))
+        ans = "{},{}".format(domain, str(self))
         for s in Statistics:
-            ans += ',' + str(self.statistics[s.value])
+            ans += "," + str(self.statistics[s.value])
         return ans
 
 

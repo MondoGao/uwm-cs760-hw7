@@ -10,60 +10,62 @@ import heapq
 from Solvers.Abstract_Solver import AbstractSolver, Statistics
 import os
 
-class ValueIteration(AbstractSolver):
 
-    def __init__(self,env,options):
-        assert str(env.observation_space).startswith( 'Discrete' ), str(self) + \
-                                                                    " cannot handle non-discrete state spaces"
-        assert str(env.action_space).startswith('Discrete'), str(self) + " cannot handle non-discrete action spaces"
-        super().__init__(env,options)
+class ValueIteration(AbstractSolver):
+    def __init__(self, env, options):
+        assert str(env.observation_space).startswith("Discrete"), (
+            str(self) + " cannot handle non-discrete state spaces"
+        )
+        assert str(env.action_space).startswith("Discrete"), (
+            str(self) + " cannot handle non-discrete action spaces"
+        )
+        super().__init__(env, options)
         self.V = np.zeros(env.nS)
 
     def train_episode(self):
         """
-            Inputs: (Available/Useful variables)
-                self.env
-                    this the OpenAI GYM environment
-                         see http://gym.openai.com/
+        Inputs: (Available/Useful variables)
+            self.env
+                this the OpenAI GYM environment
+                     see http://gym.openai.com/
 
-                state = self.env.reset():
-                    Resets the environment and returns the starting state
+            state = self.env.reset():
+                Resets the environment and returns the starting state
 
-                self.env.nS:
-                    number of states in the environment
+            self.env.nS:
+                number of states in the environment
 
-                self.env.nA:
-                    number of actions in the environment
+            self.env.nA:
+                number of actions in the environment
 
-                for probability, next_state, reward, done in self.env.P[state][action]:
-                    `probability` will be probability of `next_state` actually being the next state
-                    `reward` is the short-term/immediate reward for achieving that next state
-                    `done` is a boolean of wether or not that next state is the last/terminal state
+            for probability, next_state, reward, done in self.env.P[state][action]:
+                `probability` will be probability of `next_state` actually being the next state
+                `reward` is the short-term/immediate reward for achieving that next state
+                `done` is a boolean of wether or not that next state is the last/terminal state
 
-                    Every action has a chance (at least theortically) of different outcomes (states)
-                    Which is why `self.env.P[state][action]` is a list of outcomes and not a single outcome
+                Every action has a chance (at least theortically) of different outcomes (states)
+                Which is why `self.env.P[state][action]` is a list of outcomes and not a single outcome
 
-                self.options.gamma:
-                    The discount factor (gamma from the slides)
+            self.options.gamma:
+                The discount factor (gamma from the slides)
 
-            Outputs: (what you need to update)
-                self.V:
-                    This is a numpy array, but you can think of it as a dictionary
-                    `self.V[state]` should return a floating point value that
-                    represents the value of a state. This value should become
-                    more accurate with each episode.
+        Outputs: (what you need to update)
+            self.V:
+                This is a numpy array, but you can think of it as a dictionary
+                `self.V[state]` should return a floating point value that
+                represents the value of a state. This value should become
+                more accurate with each episode.
 
-                    How should this be calculated?
-                        look at the value iteration algorithm
-                        Ref: Sutton book eq. 4.10.
-                    Once those values have been updated, thats it for this function/class
+                How should this be calculated?
+                    look at the value iteration algorithm
+                    Ref: Sutton book eq. 4.10.
+                Once those values have been updated, thats it for this function/class
         """
 
         # you can add variables here if it is helpful
 
         # Update the estimated value of each state
         for each_state in range(self.env.nS):
-
             ###################################################
             #            Compute self.V here                  #
             # Do a one-step lookahead to find the best action #

@@ -17,11 +17,12 @@ from lib import plotting
 
 
 class QLearning(AbstractSolver):
-
     def __init__(self, env, options):
-        assert (str(env.action_space).startswith('Discrete') or
-                str(env.action_space).startswith('Tuple(Discrete')), str(
-            self) + " cannot handle non-discrete action spaces"
+        assert str(env.action_space).startswith("Discrete") or str(
+            env.action_space
+        ).startswith("Tuple(Discrete"), (
+            str(self) + " cannot handle non-discrete action spaces"
+        )
         super().__init__(env, options)
         # The final action-value function.
         # A nested dictionary that maps state -> (action -> action-value).
@@ -50,7 +51,6 @@ class QLearning(AbstractSolver):
         ################################
         #   YOUR IMPLEMENTATION HERE   #
         ################################
-
 
     def __str__(self):
         return "Q-Learning"
@@ -101,18 +101,22 @@ class Estimator:
     def __init__(self, env):
         # Feature Preprocessing: Normalize to zero mean and unit variance
         # We use a few samples from the observation space to do this
-        observation_examples = np.array([env.observation_space.sample() for x in range(10000)])
+        observation_examples = np.array(
+            [env.observation_space.sample() for x in range(10000)]
+        )
         self.scaler = sklearn.preprocessing.StandardScaler()
         self.scaler.fit(observation_examples)
 
         # Used to convert a state to a featurizes represenation.
         # We use RBF kernels with different variances to cover different parts of the space
-        self.featurizer = sklearn.pipeline.FeatureUnion([
-            ("rbf1", RBFSampler(gamma=5.0, n_components=100)),
-            ("rbf2", RBFSampler(gamma=2.0, n_components=100)),
-            ("rbf3", RBFSampler(gamma=1.0, n_components=100)),
-            ("rbf4", RBFSampler(gamma=0.5, n_components=100))
-        ])
+        self.featurizer = sklearn.pipeline.FeatureUnion(
+            [
+                ("rbf1", RBFSampler(gamma=5.0, n_components=100)),
+                ("rbf2", RBFSampler(gamma=2.0, n_components=100)),
+                ("rbf3", RBFSampler(gamma=1.0, n_components=100)),
+                ("rbf4", RBFSampler(gamma=0.5, n_components=100)),
+            ]
+        )
         self.featurizer.fit(self.scaler.transform(observation_examples))
         # We create a separate model for each action in the environment's
         # action space. Alternatively we could somehow encode the action
