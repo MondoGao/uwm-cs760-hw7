@@ -48,9 +48,21 @@ class QLearning(AbstractSolver):
         # Reset the environment
         state = self.env.reset()
 
-        ################################
-        #   YOUR IMPLEMENTATION HERE   #
-        ################################
+        learning_rate = self.options.alpha
+        discount_factor = self.options.gamma
+
+        for t in range(self.options.steps):
+            action = self.epsilon_greedy_action(state)
+            next_state, reward, done, _ = self.step(action)
+
+            leanring_target = reward + discount_factor * np.max(self.Q[next_state])
+            self.Q[state][action] = (1 - learning_rate) * self.Q[state][
+                action
+            ] + learning_rate * leanring_target
+            state = next_state
+
+            if done:
+                break
 
     def __str__(self):
         return "Q-Learning"
@@ -84,13 +96,18 @@ class QLearning(AbstractSolver):
             np.argmax(self.Q[state]): action with highest q value
 
         Returns:
-            A function that takes the observation as an argument and returns
-            the probabilities for each action in the form of a numpy array of length nA.
+            next action
         """
-        ################################
-        #   YOUR IMPLEMENTATION HERE   #
-        ################################
-        return action_probs
+        epsilon = self.options.epsilon
+        # exploration, every action has prob = epsilon * (1 / num_actions)
+        # exploitation, best action has prob = (1 - epsilon) * 1
+        action_probs = (
+            np.ones(self.env.action_space.n) * epsilon / self.env.action_space.n
+        )
+        best_action = np.argmax(self.Q[state])
+        action_probs[best_action] += 1 - epsilon
+
+        return np.random.choice(self.env.action_space.n, p=action_probs)
 
 
 class Estimator:
