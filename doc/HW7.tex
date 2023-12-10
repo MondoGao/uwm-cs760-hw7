@@ -165,6 +165,7 @@ Example commands to do this on Linux/Mac are:
 
 For Windows or more explanation see here: \url{https://docs.python.org/3/tutorial/venv.html}
 
+\pagebreak
 \section{Value Iteration [40 pts]}
 
 The \verb|ValueIteration| class in \verb|solvers/Value_Iteration.py| contains the implementation for the value iteration algorithm. Complete the \verb|train_episode| and \verb|create_greedy_policy| methods.
@@ -172,6 +173,20 @@ The \verb|ValueIteration| class in \verb|solvers/Value_Iteration.py| contains th
 \subsubsection*{Submission [6 pts each + 10 pts for code submission]}
 
 Submit a screenshot containing your \verb|train_episode| and \verb|create_greedy_policy| methods (10 points).
+
+\begin{soln}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{img/vi_train_episode.png}
+		\caption*{train\_episode}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{img/vi_create_greedy_policy.png}
+		\caption*{create\_greedy\_policy}
+	\end{figure}
+\end{soln}
+
 
 \vspace{5mm}
 For these 5 commands. Report the episode it converges at and the reward it achieves. See examples for what we expect. An example is: \begin{verbatim}
@@ -238,6 +253,7 @@ Converges in 3 episodes with reward of -18.64.
 \end{verbatim}
 Achieves a reward of 2.176 after 53 episodes.
 
+\pagebreak
 \section{Q-learning [40 pts]}
 
 The \verb|QLearning| class in \verb|solvers\Q_Learning.py| contains the implementation for the Q-learning algorithm. Complete the \verb|train_episode|, \verb|create_greedy_policy|,  and \verb|make_epsilon_greedy_policy| methods.
