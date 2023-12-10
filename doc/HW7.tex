@@ -223,7 +223,7 @@ Submission Commands:
 	      \begin{soln}
 		      Converges to a reward of \verb|2.1761| in \verb|261| episodes.
 
-          Note: if we consider to stop our algorithm after change of reward equals to 0, we'll converge at \verb|252| episodes.
+		      Note: if we consider to stop our algorithm after change of reward equals to 0, we'll converge at \verb|252| episodes.
 	      \end{soln}
 
 	\item python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.75
@@ -266,8 +266,28 @@ Submit a screenshot containing your \verb|train_episode|, \verb|create_greedy_po
 
 \verb|make_epsilon_greedy_policy| methods (10 points).
 
+\begin{soln}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{img/ql_train_episode.png}
+		\caption*{train\_episode}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{img/ql_epsilon_greedy_action.png}
+		\caption*{epsilon\_greedy\_action}
+    \small\textsuperscript{*} I change the interface of this function to return action directly instead of action probs.
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{img/ql_create_greedy_policy.png}
+		\caption*{create\_greedy\_policy}
+	\end{figure}
+\end{soln}
+
 Report the reward for these 3 commands with your implementation (10 points each) by submitting the "Episode Reward over Time" plot for each command:
 
+\pagebreak
 \begin{enumerate}
 	\item  python run.py -s ql -d CliffWalking -e 100 -a 0.2 -g 0.9 -p 0.1
 	\item  python run.py -s ql -d CliffWalking -e 100 -a 0.8 -g 0.5 -p 0.1
