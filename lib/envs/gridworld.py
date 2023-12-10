@@ -41,6 +41,8 @@ class GridworldEnv(discrete.DiscreteEnv):
         nS = np.prod(shape)
         nA = 4
 
+        print(nS)
+
         MAX_Y = shape[0]
         MAX_X = shape[1]
 
