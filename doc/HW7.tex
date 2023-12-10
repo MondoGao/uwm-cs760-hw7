@@ -363,7 +363,7 @@ Let the step size parameter $\alpha=0.5$.
 			      \end{center}
 		      \end{table*}
 
-					Because we prefer move when there is a tie, the algorithm is always jumping between A and B, and we'll always get a 0 learning target, there is no surprise the action-value table are all zeros.
+		      Because we prefer move when there is a tie, the algorithm is always jumping between A and B, and we'll always get a 0 learning target, there is no surprise the action-value table are all zeros.
 	      \end{soln}
 
 	\item (5 pts) Reset and repeat the above, but with an $\epsilon$-greedy behavior policy: at each state $s_t$, with probability $1-\epsilon$ choose what the current Q table says is the best action: $\argmax_a Q(s_t,a)$; Break ties arbitrarily. Otherwise, (with probability $\epsilon$) uniformly chooses between move and stay (move or stay both with 1/2 probability). Use $\epsilon=0.5$.
@@ -372,18 +372,80 @@ Let the step size parameter $\alpha=0.5$.
 		      \begin{table*}[!h]
 			      \begin{center}
 				      \begin{tabular}{ccc}
-					      State/Action & Move & Stay \\\hline
-					      A            & 3.9980    & 4.9983    \\
-					      B            & 3.9980    & 4.9983
+					      State/Action & Move   & Stay   \\\hline
+					      A            & 3.9980 & 4.9983 \\
+					      B            & 3.9980 & 4.9983
 				      \end{tabular}
 				      \caption*{Q table after 200 steps within 1 episode}
 			      \end{center}
 		      \end{table*}
-					\end{soln}
+	      \end{soln}
 
+	      \pagebreak
 	\item (5 pts) Without doing simulation, use Bellman equation to derive the true action-value table induced by the MDP. That is, calculate the true optimal action-values by hand.
 
+	      \begin{soln}
+		      We have:
+		      \[S = {A,B}\]
+		      \[A(s) = \{move, stay\}\]
+		      \[P(s' | s, a) = \begin{cases}
+				      1 & \text{if } s' = s \text{ and } a = stay    \\
+				      1 & \text{if } s' \neq s \text{ and } a = move \\
+				      0 & \text{otherwise}
+			      \end{cases}\]
+		      \[r(s, a) = \begin{cases}
+				      1 & \text{if } a = stay \\
+				      0 & \text{if } a = move \\
+			      \end{cases}\]
+		      Applying Bellman equation, we have:
+		      \[
+			      Q(A, move) = \sum_{s' \in S} P(s' | A, move) (r(s, move) + \gamma V(s')) = 0.8 V(B)\\
+			      = 0.8 \max(Q(B, move), Q(B, stay))
+		      \]
+		      Since reward for stay is 1 and reward for move is 0, we can easily know to maximize the total rewards we'll always stay at $s_0$, then we have $Q(a, stay) \geq Q(a, move)$, so:
+		      \[
+			      Q(A, move) = 0.8 Q(B, stay)
+		      \]
+		      Likewise,
+		      \[
+			      Q(A, stay) = \sum_{s' \in S} P(s' | A, stay) (r(s, stay) + \gamma V(s')) = 1 + 0.8 Q(A, stay)
+		      \]
+		      \[
+			      Q(B, stay) = \sum_{s' \in S} P(s' | B, stay) (r(s, stay) + \gamma V(s')) = 1 + 0.8 Q(B, stay)
+		      \]
+		      \[ Q(A, stay), Q(B, stay) = 5 \]\\
+
+		      Substitue $Q(A, stay)$ and $Q(B, stay)$ into $Q(A, move)$, $Q(B, move)$, we have:
+		      \[
+			      Q(B, move) = \sum_{s' \in S} P(s' | B, move) (r(s, move) + \gamma V(s')) = 0.8 Q(A, stay)
+		      \]
+		      \[ Q(A, move), Q(B, move) =  4 \]
+
+
+		      \begin{table*}[!h]
+			      \begin{center}
+				      \begin{tabular}{ccc}
+					      State/Action & Move & Stay \\\hline
+					      A            & 4    & 5    \\
+					      B            & 4    & 5
+				      \end{tabular}
+				      \caption*{Q table}
+			      \end{center}
+		      \end{table*}
+
+	      \end{soln}
+
+
+
 	\item (5 pts) To the extent that you obtain different solutions for each question, explain why the action-values  differ.
+
+	      \begin{soln}
+					For first method, because we prefer to move when there is a tie, the algorithm is always jumping between A and B, and gain no reward during the update, so the action-values are all zeros.\\\\
+					For second method, we have a $\epsilon$-greedy behavior policy, so we'll have a chance to explore the environment, and we'll get a reward of 1 when we stay at $s_0$, so we can get a action-values near real distribution.\\\\
+					Because we actually know the transition probabilities and rewards, we can easily get the optimial policy, and we can see our result from q-learning is very close to the optimial solution.
+	      \end{soln}
+
+	      \pagebreak
 
 	      \section{A2C (Extra credit)}
 	      \subsection{Implementation}
