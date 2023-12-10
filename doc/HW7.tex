@@ -136,7 +136,7 @@
 
 \begin{document}
 
-\maketitle 
+\maketitle
 
 \textbf{Instructions:}
 Use this latex file as a template to develop your homework. Please submit a single pdf to Canvas. Late submissions may not be accepted. You can choose any programming language (i.e. python, R, or MATLAB). Please check Piazza for updates about the homework.
@@ -171,7 +171,7 @@ The \verb|ValueIteration| class in \verb|solvers/Value_Iteration.py| contains th
 
 \subsubsection*{Submission [6 pts each + 10 pts for code submission]}
 
-Submit a screenshot containing your \verb|train_episode| and \verb|create_greedy_policy| methods (10 points). 
+Submit a screenshot containing your \verb|train_episode| and \verb|create_greedy_policy| methods (10 points).
 
 \vspace{5mm}
 For these 5 commands. Report the episode it converges at and the reward it achieves. See examples for what we expect. An example is: \begin{verbatim}
@@ -184,18 +184,43 @@ Converges to a reward of \verb|___| in \verb|___| episodes.
 \vspace{8mm}
 
 Submission Commands:
-\begin{enumerate} 
-    \item   python run.py -s vi -d Gridworld -e 200 -g 0.05
-    \item   python run.py -s vi -d Gridworld -e 200 -g 0.2
-    \item  python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.5   
-    \item  python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.9  
-    \item python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.75 
+\begin{enumerate}
+	\item   python run.py -s vi -d Gridworld -e 200 -g 0.05
+
+	      \begin{soln}
+		      Converges to a reward of \verb|-14.51| in \verb|3| episodes.
+	      \end{soln}
+
+	\item   python run.py -s vi -d Gridworld -e 200 -g 0.2
+
+	      \begin{soln}
+		      Converges to a reward of \verb|-16.16| in \verb|3| episodes.
+	      \end{soln}
+
+	\item  python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.5
+
+	      \begin{soln}
+		      Converges to a reward of \verb|0.6374| in \verb|49| episodes.
+	      \end{soln}
+
+	\item  python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.9
+
+	      \begin{soln}
+		      Converges to a reward of \verb|2.1761| in \verb|252| episodes.
+	      \end{soln}
+
+	\item python run.py -s vi -d FrozenLake-v0 -e 500 -g 0.75
+
+	      \begin{soln}
+		      Converges to a reward of \verb|1.1316| in \verb|106| episodes.
+	      \end{soln}
+
 \end{enumerate}
-    
+
 
 \subsubsection*{Examples}
 
-For each of these commands. The expected reward is given for a correct solution. 
+For each of these commands. The expected reward is given for a correct solution.
 If your solution gives the same reward it doesn't guarantee correctness on the test cases that you report results on -- you're encouraged to develop your own test cases to supplement the provided ones.
 
 \begin{verbatim}
@@ -219,16 +244,16 @@ The \verb|QLearning| class in \verb|solvers\Q_Learning.py| contains the implemen
 
 \subsubsection*{Submission [10 pts each + 10 pts for code submission]}
 
-Submit a screenshot containing your \verb|train_episode|, \verb|create_greedy_policy| and 
+Submit a screenshot containing your \verb|train_episode|, \verb|create_greedy_policy| and
 
-\verb|make_epsilon_greedy_policy| methods (10 points). 
+\verb|make_epsilon_greedy_policy| methods (10 points).
 
 Report the reward for these 3 commands with your implementation (10 points each) by submitting the "Episode Reward over Time" plot for each command:
 
 \begin{enumerate}
-    \item  python run.py -s ql -d CliffWalking -e 100 -a 0.2 -g 0.9 -p 0.1
-    \item  python run.py -s ql -d CliffWalking -e 100 -a 0.8 -g 0.5 -p 0.1  
-    \item  python run.py -s ql -d CliffWalking -e 500 -a 0.6 -g 0.8 -p 0.1   
+	\item  python run.py -s ql -d CliffWalking -e 100 -a 0.2 -g 0.9 -p 0.1
+	\item  python run.py -s ql -d CliffWalking -e 100 -a 0.8 -g 0.5 -p 0.1
+	\item  python run.py -s ql -d CliffWalking -e 500 -a 0.6 -g 0.8 -p 0.1
 \end{enumerate}
 
 For reference, command 1 should end with a reward around -60, command 2 should end with a reward around -25 and command 3 should end with a reward around -40.
@@ -249,17 +274,17 @@ It has two states $s$. It has two actions $a$: move and stay. The state transiti
 \\
 
 \begin{tikzpicture}
-    \tikzstyle{n} = [very thick,circle,inner sep=0mm,minimum width=6mm]
-    \tikzstyle{a} = [thick,>=latex,->]
-    \def\dx{1.2}
-    \def\dy{-1.2}
-    \node[n,C1,draw=C1] (2) at (\dy,0) {\textbf{\textsf{A}}};
-    \node[n,C2,draw=C2] (1) at (\dx,0) {\textbf{\textsf{B}}};
-    \path[a]
-    (2) edge [loop below] node {+1}(2)
-    (1) edge [loop below] node {+1}(1)
-    (2) edge [bend right=20] node[below] {0}(1)
-    (1) edge [bend right=20] node[above] {0}(2);
+	\tikzstyle{n} = [very thick,circle,inner sep=0mm,minimum width=6mm]
+	\tikzstyle{a} = [thick,>=latex,->]
+	\def\dx{1.2}
+	\def\dy{-1.2}
+	\node[n,C1,draw=C1] (2) at (\dy,0) {\textbf{\textsf{A}}};
+	\node[n,C2,draw=C2] (1) at (\dx,0) {\textbf{\textsf{B}}};
+	\path[a]
+	(2) edge [loop below] node {+1}(2)
+	(1) edge [loop below] node {+1}(1)
+	(2) edge [bend right=20] node[below] {0}(1)
+	(1) edge [bend right=20] node[above] {0}(2);
 \end{tikzpicture}
 
 The reinforcement learning agent performs Q-learning.  Recall the $Q$ table has entries $Q(s,a)$. The $Q$ table is initialized with all zeros. The agent starts in state $s_1=A$. In any state $s_t$, the agent chooses the action $a_t$ according to a behavior policy $a_t = \pi_B(s_t)$. Upon experiencing the next state and reward $s_{t+1}, r_t$ the update is:
@@ -267,38 +292,38 @@ $$Q(s_t, a_t) \Leftarrow (1-\alpha) Q(s_t, a_t) + \alpha \left( r_t + \gamma \ma
 Let the step size parameter $\alpha=0.5$.
 
 \begin{enumerate}
-\item (5 pts) Run Q-learning for 200 steps with a deterministic greedy behavior policy: at each state $s_t$ use the best action $a_t \in \argmax_a Q(s_t,a)$ indicated by the current action-value table. If there is a tie, prefer move. Show the action-value table at the end.
+	\item (5 pts) Run Q-learning for 200 steps with a deterministic greedy behavior policy: at each state $s_t$ use the best action $a_t \in \argmax_a Q(s_t,a)$ indicated by the current action-value table. If there is a tie, prefer move. Show the action-value table at the end.
 
-\item (5 pts) Reset and repeat the above, but with an $\epsilon$-greedy behavior policy: at each state $s_t$, with probability $1-\epsilon$ choose what the current Q table says is the best action: $\argmax_a Q(s_t,a)$; Break ties arbitrarily. Otherwise, (with probability $\epsilon$) uniformly chooses between move and stay (move or stay both with 1/2 probability). Use $\epsilon=0.5$.
+	\item (5 pts) Reset and repeat the above, but with an $\epsilon$-greedy behavior policy: at each state $s_t$, with probability $1-\epsilon$ choose what the current Q table says is the best action: $\argmax_a Q(s_t,a)$; Break ties arbitrarily. Otherwise, (with probability $\epsilon$) uniformly chooses between move and stay (move or stay both with 1/2 probability). Use $\epsilon=0.5$.
 
-\item (5 pts) Without doing simulation, use Bellman equation to derive the true action-value table induced by the MDP. That is, calculate the true optimal action-values by hand.
+	\item (5 pts) Without doing simulation, use Bellman equation to derive the true action-value table induced by the MDP. That is, calculate the true optimal action-values by hand.
 
-\item (5 pts) To the extent that you obtain different solutions for each question, explain why the action-values  differ.
+	\item (5 pts) To the extent that you obtain different solutions for each question, explain why the action-values  differ.
 
-\section{A2C (Extra credit)}
-\subsection{Implementation}
+	      \section{A2C (Extra credit)}
+	      \subsection{Implementation}
 
-You will implement a function for the A2C algorithm in solvers/A2C.py.
-% 
-Skeleton code for the algorithm is already provided in the relevant python files.
-% 
-Specifically, you will need to complete \verb|train| for A2C.
-% 
-To test your implementation, run:
-% 
-\begin{verbatim}
+	      You will implement a function for the A2C algorithm in solvers/A2C.py.
+	      % 
+	      Skeleton code for the algorithm is already provided in the relevant python files.
+	      % 
+	      Specifically, you will need to complete \verb|train| for A2C.
+	      % 
+	      To test your implementation, run:
+	      % 
+	      \begin{verbatim}
   python run.py -s a2c -t 1000 -d CartPole-v1 -G 200 
   
   -e 2000 -a\ 0.001 -g 0.95 -l [32]
 \end{verbatim}
-% 
-This command will train a neural network policy with A2C on the CartPole domain for 2000 episodes.
-% 
-The policy has a single hidden layer with 32 hidden units in that layer.
-\subsubsection*{Submission}
-% 
+	      % 
+	      This command will train a neural network policy with A2C on the CartPole domain for 2000 episodes.
+	      % 
+	      The policy has a single hidden layer with 32 hidden units in that layer.
+	      \subsubsection*{Submission}
+	      % 
 
-For submission, plot the final reward/episode for 5 different values of either alpha or gamma. Then include a short (\verb|<5 sentence|) analysis on the impact that alpha/gamma had for the reward in this domain.
+	      For submission, plot the final reward/episode for 5 different values of either alpha or gamma. Then include a short (\verb|<5 sentence|) analysis on the impact that alpha/gamma had for the reward in this domain.
 
 
 

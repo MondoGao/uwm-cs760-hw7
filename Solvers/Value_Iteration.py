@@ -78,8 +78,10 @@ class ValueIteration(AbstractSolver):
             v_s = V_actions[a_best]
             V_prime[each_state] = v_s
         
-        self.V = V_prime
+        delta = np.sum(V_prime) - np.sum(self.V) 
+        print("Delta: ", delta)
 
+        self.V = V_prime
 
         # Dont worry about this part
         self.statistics[Statistics.Rewards.value] = np.sum(self.V)
