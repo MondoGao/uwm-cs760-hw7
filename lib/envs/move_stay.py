@@ -24,8 +24,9 @@ class MoveStayEnv(discrete.DiscreteEnv):
         P = {}
         for s in range(nS):
             P[s] = {a: [] for a in range(nA)}
-            P[s][MOVE] = [(1.0, 1 - s, 0, True)]
-            P[s][STAY] = [(1.0, s, 1, True)]
+            P[s][MOVE] = [(1.0, 1 - s, 0, False)]
+            P[s][STAY] = [(1.0, s, 1, False)]
+        print(P)
 
         isd = np.zeros(nS)
         isd[SA] = 1.0

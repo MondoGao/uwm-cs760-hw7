@@ -50,12 +50,10 @@ class QLearning(AbstractSolver):
 
         learning_rate = self.options.alpha
         discount_factor = self.options.gamma
-        print(f"learning_rate: {learning_rate}, discount_factor: {discount_factor}, epsilon: {self.options.epsilon}")
 
         for t in range(self.options.steps):
             action = self.epsilon_greedy_action(state)
             next_state, reward, done, _ = self.step(action)
-            print(f"state: {state}, action: {action}, next_state: {next_state}, reward: {reward}, done: {done}")
 
             leanring_target = reward + discount_factor * np.max(self.Q[next_state])
             self.Q[state][action] = (1 - learning_rate) * self.Q[state][

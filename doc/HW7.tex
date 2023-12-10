@@ -324,6 +324,7 @@ Again for this command, the expected reward is given for a correct solution. If 
 
 Achieves a best performing policy with -13 reward.
 
+\pagebreak
 \section{Q-learning [20 pts]}
 For this question you can either reimplement your Q-learning code or use your previous implementation. You will be using a custom made MDP for analysis. Consider the following Markov Decision Process.
 It has two states $s$. It has two actions $a$: move and stay. The state transition is deterministic: ``move'' moves to the other state, while ``stay' stays at the current state. The reward $r$ is 0 for move,  1 for stay. There is a discounting factor $\gamma=0.8$.
@@ -350,7 +351,35 @@ Let the step size parameter $\alpha=0.5$.
 \begin{enumerate}
 	\item (5 pts) Run Q-learning for 200 steps with a deterministic greedy behavior policy: at each state $s_t$ use the best action $a_t \in \argmax_a Q(s_t,a)$ indicated by the current action-value table. If there is a tie, prefer move. Show the action-value table at the end.
 
+	      \begin{soln}
+		      \begin{table*}[!h]
+			      \begin{center}
+				      \begin{tabular}{ccc}
+					      State/Action & Move & Stay \\\hline
+					      A            & 0    & 0    \\
+					      B            & 0    & 0
+				      \end{tabular}
+				      \caption*{Q table after 200 steps within 1 episode}
+			      \end{center}
+		      \end{table*}
+
+					Because we prefer move when there is a tie, the algorithm is always jumping between A and B, and we'll always get a 0 learning target, there is no surprise the action-value table are all zeros.
+	      \end{soln}
+
 	\item (5 pts) Reset and repeat the above, but with an $\epsilon$-greedy behavior policy: at each state $s_t$, with probability $1-\epsilon$ choose what the current Q table says is the best action: $\argmax_a Q(s_t,a)$; Break ties arbitrarily. Otherwise, (with probability $\epsilon$) uniformly chooses between move and stay (move or stay both with 1/2 probability). Use $\epsilon=0.5$.
+
+	      \begin{soln}
+		      \begin{table*}[!h]
+			      \begin{center}
+				      \begin{tabular}{ccc}
+					      State/Action & Move & Stay \\\hline
+					      A            & 3.9980    & 4.9983    \\
+					      B            & 3.9980    & 4.9983
+				      \end{tabular}
+				      \caption*{Q table after 200 steps within 1 episode}
+			      \end{center}
+		      \end{table*}
+					\end{soln}
 
 	\item (5 pts) Without doing simulation, use Bellman equation to derive the true action-value table induced by the MDP. That is, calculate the true optimal action-values by hand.
 

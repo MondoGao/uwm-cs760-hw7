@@ -3467,3 +3467,7 @@ CliffWalking,Q-Learning,497,-15.0,15
 CliffWalking,Q-Learning,498,-13.0,13
 CliffWalking,Q-Learning,499,-13.0,13
 CliffWalking,Q-Learning,500,-15.0,15
+
+MoveStay,Q-Learning,1,0,200
+
+MoveStay,Q-Learning,1,137,200
