@@ -100,10 +100,6 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
     plt.xlabel("Episode")
     plt.ylabel("Episode Length")
     plt.title("Episode Length over Time")
-    if noshow:
-        plt.close()
-    else:
-        plt.show()
 
     # Plot the episode reward over time
     fig2 = plt.figure(figsize=(10, 5))

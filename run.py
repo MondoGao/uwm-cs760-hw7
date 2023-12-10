@@ -148,7 +148,8 @@ def main(options):
                                                            solver.statistics[Statistics.Steps.value]))
         if options.graphics_every > -1:
             solver.render = True
-            solver.run_greedy()
+            reward, time = solver.run_greedy()
+            print("Greedy run: Reward {}, Steps {}".format(reward, time))
 
         if not options.disable_plots:
             solver.plot(stats)
