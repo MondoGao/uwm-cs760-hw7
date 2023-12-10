@@ -50,10 +50,14 @@ class QLearning(AbstractSolver):
 
         learning_rate = self.options.alpha
         discount_factor = self.options.gamma
+        print(f"learning_rate: {learning_rate}, discount_factor: {discount_factor}")
 
         for t in range(self.options.steps):
             action = self.epsilon_greedy_action(state)
             next_state, reward, done, _ = self.step(action)
+            print(
+                f"t: {t}, state: {state}, action: {action}, reward: {reward}, next_state: {next_state}, done: {done}"
+            )
 
             leanring_target = reward + discount_factor * np.max(self.Q[next_state])
             self.Q[state][action] = (1 - learning_rate) * self.Q[state][
@@ -64,6 +68,7 @@ class QLearning(AbstractSolver):
             if done:
                 break
 
+
     def __str__(self):
         return "Q-Learning"
 
@@ -71,6 +76,7 @@ class QLearning(AbstractSolver):
         plotting.plot_episode_stats(stats)
 
     def create_greedy_policy(self):
+        raise NotImplementedError
         """
         Creates a greedy policy based on Q values.
 
