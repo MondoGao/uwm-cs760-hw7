@@ -108,41 +108,44 @@ class A2C(AbstractSolver):
 
         states_tensor = torch.tensor(states, dtype=torch.float32)
 
-        print(f"actions: {actions}")
         # One-hot encoding for actions
         actions_one_hot = np.zeros([len(actions), self.env.action_space.n])
         actions_one_hot[np.arange(len(actions)), actions] = 1
-        print(f"actions_one_hot: {actions_one_hot}")
         actions_one_hot = torch.tensor(actions_one_hot)
-        print(f"actions_one_hot tensor: {actions_one_hot}")
 
-        ################################
-        #   YOUR IMPLEMENTATION HERE   #
-        ################################
         # Compute returns
         returns = np.zeros_like(rewards)
-        # TODO: Compute bootstrapped returns for each state-action in states
+        # Compute bootstrapped returns for each state-action in states
         # and actions
+        G = 0  # Initialize the return (G) for the final state
+        for t in reversed(range(len(rewards))):
+            G = rewards[t] + self.options.gamma * G
+            returns[t] = G
+
         returns = torch.tensor(returns, dtype=torch.float32)
 
         values = self.actor_critic.value(states_tensor)
-
-        # TODO: Compute advantages for each state-action pair in states and
+        # Compute advantages for each state-action pair in states and
         # actions.
+        next_value = self.actor_critic.value(
+            torch.tensor(next_state, dtype=torch.float32)
+        )
+        advantages = returns - values
+        advantages = advantages.detach()
 
         log_probs = torch.sum(
             self.actor_critic.log_probs(states_tensor) * actions_one_hot, axis=-1
         )
 
         # Compute actor and critic losses
-        ################################
-        #   YOUR IMPLEMENTATION HERE   #
-        ################################
-        # TODO: compute these losses.
+        # compute these losses.
         # Useful functions: torch.square for critic loss.
-        policy_loss = 0.0
-        critic_loss = 0.0
-        loss = policy_loss.mean() + critic_loss.mean()
+        policy_loss = -torch.sum(log_probs * advantages)
+        critic_loss = torch.mean(torch.square(returns - values))
+        # loss = policy_loss.mean() + critic_loss.mean()
+        loss = policy_loss + critic_loss
+
+        self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
 

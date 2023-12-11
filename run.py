@@ -152,8 +152,6 @@ def main(options):
         if options.graphics_every > -1:
             solver.render = True
             reward, time = solver.run_greedy()
-        
-        print(f"Q values: {solver.Q}")
 
         if not options.disable_plots:
             solver.plot(stats)
