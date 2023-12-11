@@ -153,4 +153,5 @@ class A2C(AbstractSolver):
         return "A2C"
 
     def plot(self, stats):
+        print(f"Plotting: gamma={self.options.gamma}, alpha={self.options.alpha}")
         plotting.plot_episode_stats(stats)

@@ -440,9 +440,9 @@ Let the step size parameter $\alpha=0.5$.
 	\item (5 pts) To the extent that you obtain different solutions for each question, explain why the action-values  differ.
 
 	      \begin{soln}
-					For first method, because we prefer to move when there is a tie, the algorithm is always jumping between A and B, and gain no reward during the update, so the action-values are all zeros.\\\\
-					For second method, we have a $\epsilon$-greedy behavior policy, so we'll have a chance to explore the environment, and we'll get a reward of 1 when we stay at $s_0$, so we can get a action-values near real distribution.\\\\
-					Because we actually know the transition probabilities and rewards, we can easily get the optimial policy, and we can see our result from q-learning is very close to the optimial solution.
+		      For first method, because we prefer to move when there is a tie, the algorithm is always jumping between A and B, and gain no reward during the update, so the action-values are all zeros.\\\\
+		      For second method, we have a $\epsilon$-greedy behavior policy, so we'll have a chance to explore the environment, and we'll get a reward of 1 when we stay at $s_0$, so we can get a action-values near real distribution.\\\\
+		      Because we actually know the transition probabilities and rewards, we can easily get the optimial policy, and we can see our result from q-learning is very close to the optimial solution.
 	      \end{soln}
 
 	      \pagebreak
@@ -472,6 +472,51 @@ Let the step size parameter $\alpha=0.5$.
 
 	      For submission, plot the final reward/episode for 5 different values of either alpha or gamma. Then include a short (\verb|<5 sentence|) analysis on the impact that alpha/gamma had for the reward in this domain.
 
+	      \begin{soln}
+		      \subsubsection*{Increacing gamma ($\gamma \in (0.5, 0.8, 0.9, 0.99)$, $\alpha = 0.001$)}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.5g0.001a.png}
+			      \caption*{gamma=0.5, alpha=0.001}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.8g0.001a.png}
+			      \caption*{gamma=0.8, alpha=0.001}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.9g0.001a.png}
+			      \caption*{gamma=0.9, alpha=0.001}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.99g0.001a.png}
+			      \caption*{gamma=0.99, alpha=0.001}
+		      \end{figure}
+
+		      With gamma increasing, the agent will consider more about future rewards.
+
+		      \subsubsection*{Increacing alpha ($\gamma =0.9$, $\alpha \in (0.001, 0.01, 0.1)$)}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.9g0.001a.png}
+			      \caption*{gamma=0.9, alpha=0.001}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.9g0.01a.png}
+			      \caption*{gamma=0.9, alpha=0.01}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \centering
+			      \includegraphics[width=0.8\textwidth]{img/0.9g0.1a.png}
+			      \caption*{gamma=0.9, alpha=0.1}
+		      \end{figure}
+
+		      With alpha increasing, the agent will learn faster, but it will sometimes became unstable. Like when alpha=0.01, the reward suddenly increace around episode 500, but this doesn't happen in every training.
+
+	      \end{soln}
 
 
 \end{enumerate}
