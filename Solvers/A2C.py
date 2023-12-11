@@ -108,10 +108,13 @@ class A2C(AbstractSolver):
 
         states_tensor = torch.tensor(states, dtype=torch.float32)
 
+        print(f"actions: {actions}")
         # One-hot encoding for actions
         actions_one_hot = np.zeros([len(actions), self.env.action_space.n])
         actions_one_hot[np.arange(len(actions)), actions] = 1
+        print(f"actions_one_hot: {actions_one_hot}")
         actions_one_hot = torch.tensor(actions_one_hot)
+        print(f"actions_one_hot tensor: {actions_one_hot}")
 
         ################################
         #   YOUR IMPLEMENTATION HERE   #
